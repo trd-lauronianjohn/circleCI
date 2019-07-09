@@ -9,9 +9,6 @@ jobs:
     # Specify the Xcode version to use
     macos:
       xcode: "10.1.0"
-      
-    docker:
-      - image: circleci/ruby:2.4.1
 
     steps:
       - checkout
