@@ -1,9 +1,9 @@
+# .circleci/config.yml
 version: 2
 jobs:
   build-and-test:
     macos:
       xcode: "10.1.0"
-    working_directory: /Users/distiller/project
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
@@ -22,7 +22,6 @@ jobs:
   adhoc:
     macos:
       xcode: "10.1.0"
-    working_directory: /Users/distiller/project
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: adhoc
@@ -34,24 +33,7 @@ jobs:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
       - store_artifacts:
-          path: output/Game.ipa
-
-  beta:
-    macos:
-      xcode: "10.1.0"
-    working_directory: /Users/distiller/project
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: beta
-    shell: /bin/bash --login -o pipefail
-    steps:
-      - checkout
-      - run: bundle install
-      - run:
-          name: Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
-      - store_artifacts:
-          path: output/Game.ipa
+          path: output
 
 workflows:
   version: 2
@@ -64,9 +46,3 @@ workflows:
               only: development
           requires:
             - build-and-test
-      #- beta:
-          #filters:
-            #branches:
-              #only: master
-          #requires:
-            #- build-and-test
